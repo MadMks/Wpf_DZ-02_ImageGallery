@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Forms;
+using WinForms = System.Windows.Forms;
+using System.IO;
 
 namespace Task_ImageGallery
 {
@@ -20,9 +23,51 @@ namespace Task_ImageGallery
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Путь поиска файлов.
+        /// </summary>
+        private string path;    // TODO delete
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+
+        private void btnOpenFolder_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO диалог открытия папки
+            using(FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
+            {
+                folderBrowserDialog.RootFolder = Environment.SpecialFolder.LocalizedResources;
+                folderBrowserDialog.ShowNewFolderButton = false;
+
+                //DialogResult result = folderBrowserDialog.ShowDialog();
+
+                if (folderBrowserDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    // TODO получаем путь к папке
+                    this.path = folderBrowserDialog.SelectedPath;   // TODO delete
+
+                    AddToTheListFoundFilesImages(folderBrowserDialog.SelectedPath);     // TODO (string path)
+                }
+            }
+        }
+
+        private void AddToTheListFoundFilesImages(string selectedPath)
+        {
+            this.listBox.Items.Clear();
+
+            DirectoryInfo directoryInfo = new DirectoryInfo(selectedPath);
+
+            foreach (FileInfo fileInfo in directoryInfo.GetFiles())
+            {
+                System.Windows.Controls.Button button = new System.Windows.Controls.Button
+                {
+                    Content = "test btn"
+                };
+                this.listBox.Items.Add(button);
+            }
         }
     }
 }

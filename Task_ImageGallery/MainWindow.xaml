@@ -6,7 +6,56 @@
         xmlns:local="clr-namespace:Task_ImageGallery"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <!--<Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="6*"/>
+        </Grid.RowDefinitions>
+        <Button Grid.Column="0" Grid.Row="0">1</Button>
+        <TextBlock Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2">Progress Bar</TextBlock>
+        <ListBox Grid.Column="0" Grid.Row="1">
+            <ListBoxItem>1</ListBoxItem>
+            <ListBoxItem>2</ListBoxItem>
+            <ListBoxItem>3</ListBoxItem>
+        </ListBox>
+    </Grid>-->
+    <DockPanel>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+            <Button Name="btnOpenFolder" Click="btnOpenFolder_Click">Открыть папку</Button>
+            <TextBlock>Progres Bar</TextBlock>
+        </StackPanel>
+        <!--<StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+            <ListBox>
+                <ListBoxItem>
+                    <Button>
+                        Tag Image
+                    </Button>
+                </ListBoxItem>
+                <ListBoxItem>2</ListBoxItem>
+                <ListBoxItem>3</ListBoxItem>
+            </ListBox>
+            <TextBlock>img</TextBlock>
+        </StackPanel>-->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <ListBox Grid.Column="0" Name="listBox">
+                <ListBoxItem>
+                    <Button>
+                        Tag Image
+                    </Button>
+                </ListBoxItem>
+                <ListBoxItem>2</ListBoxItem>
+                <ListBoxItem>3</ListBoxItem>
+            </ListBox>
+            <TextBlock Grid.Column="1">img</TextBlock>
+        </Grid>
+    </DockPanel>
 </Window>
