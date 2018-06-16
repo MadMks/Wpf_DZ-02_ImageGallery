@@ -32,20 +32,20 @@ namespace Task_ImageGallery
         /// Путь поиска файлов.
         /// </summary>
         private string path;    // TODO delete
-        BackgroundWorker worker;
+        //BackgroundWorker worker;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            worker = new BackgroundWorker();
-            worker.DoWork += Worker_DoWork;
+            //worker = new BackgroundWorker();
+            //worker.DoWork += Worker_DoWork;
         }
 
-        private void Worker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            AddToTheListFoundFilesImages();
-        }
+        //private void Worker_DoWork(object sender, DoWorkEventArgs e)
+        //{
+        //    AddToTheListFoundFilesImages();
+        //}
 
         private void btnOpenFolder_Click(object sender, RoutedEventArgs e)
         {
@@ -63,10 +63,7 @@ namespace Task_ImageGallery
 
                     this.path = folderBrowserDialog.SelectedPath;
 
-                    //////AddToTheListFoundFilesImages(folderBrowserDialog.SelectedPath);     // TODO (string path)
-
-
-                    worker.RunWorkerAsync();
+                    AddToTheListFoundFilesImages(folderBrowserDialog.SelectedPath);     // TODO (string path)
 
 
                     if (this.listBox.Items.Count > 0)
@@ -83,12 +80,13 @@ namespace Task_ImageGallery
         }
 
 
-        private void AddToTheListFoundFilesImages()
+        private void AddToTheListFoundFilesImages(string selectedPath)
         {
             this.listBox.Items.Clear();
+            this.progressBar.Value = 0;
 
             UpdateProgressBarDelegate updProgress = new UpdateProgressBarDelegate(progressBar.SetValue);
-            double value = 0;
+            //double value = 0;
 
             
 
@@ -103,10 +101,12 @@ namespace Task_ImageGallery
                 {
                     this.AddToListBoxImage(fileInfo);
 
-                    this.progressBar.Value++;
+                    //this.progressBar.Value++;
                     //System.Threading.Thread.Sleep(1000);
-                    value++;
-                    //Dispatcher.Invoke(updProgress, new object[] { Wpf.ProgressBar.ValueProperty, this.progressBar.Value });
+                    //value++;
+                    //Dispatcher.Invoke(updProgress, new object[] { Wpf.ProgressBar.ValueProperty, ++this.progressBar.Value });
+                    Dispatcher.Invoke(updProgress,
+                      System.Windows.Threading.DispatcherPriority.Background, new object[] { Wpf.ProgressBar.ValueProperty, ++this.progressBar.Value });
 
                 }
             }
