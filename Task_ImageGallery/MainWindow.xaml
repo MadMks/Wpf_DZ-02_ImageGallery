@@ -33,7 +33,7 @@
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Name="btnOpenFolder" Click="btnOpenFolder_Click">Открыть папку</Button>
             <!--<TextBlock>Progres Bar</TextBlock>-->
-            <ProgressBar Grid.Column="1" Grid.ColumnSpan="2" Minimum="0"></ProgressBar>
+            <ProgressBar Name="progressBar" Grid.Column="1" Grid.ColumnSpan="2" Minimum="0" Value="0" ValueChanged="progressBar_ValueChanged"></ProgressBar>
         </Grid>
         <!--<StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
             <Button Name="btnOpenFolder" Click="btnOpenFolder_Click">Открыть папку</Button>
