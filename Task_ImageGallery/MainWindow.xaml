@@ -25,10 +25,20 @@
         </ListBox>
     </Grid>-->
     <DockPanel>
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Name="btnOpenFolder" Click="btnOpenFolder_Click">Открыть папку</Button>
+            <!--<TextBlock>Progres Bar</TextBlock>-->
+            <ProgressBar Grid.Column="1" Grid.ColumnSpan="2" Minimum="0"></ProgressBar>
+        </Grid>
+        <!--<StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
             <Button Name="btnOpenFolder" Click="btnOpenFolder_Click">Открыть папку</Button>
-            <TextBlock>Progres Bar</TextBlock>
-        </StackPanel>
+            <ProgressBar HorizontalAlignment="Stretch"></ProgressBar>
+        </StackPanel>-->
         <!--<StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
             <ListBox>
                 <ListBoxItem>
@@ -43,19 +53,13 @@
         </StackPanel>-->
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <ListBox Grid.Column="0" Name="listBox">
-                <ListBoxItem>
-                    <Button>
-                        Tag Image
-                    </Button>
-                </ListBoxItem>
-                <ListBoxItem>2</ListBoxItem>
-                <ListBoxItem>3</ListBoxItem>
             </ListBox>
-            <TextBlock Grid.Column="1">img</TextBlock>
+            <!--<TextBlock Grid.Column="1">img</TextBlock>-->
+            <Image Name="imageSlider" Grid.Column="1" Stretch="Uniform"></Image>
         </Grid>
     </DockPanel>
 </Window>
