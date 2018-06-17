@@ -20,7 +20,9 @@ using System.ComponentModel;
 
 namespace Task_ImageGallery
 {
-
+    /// <summary>
+    /// Делегат для progressBar.
+    /// </summary>
     delegate void UpdateProgressBarDelegate(DependencyProperty dp, object value);
 
     /// <summary>
@@ -31,25 +33,15 @@ namespace Task_ImageGallery
         /// <summary>
         /// Путь поиска файлов.
         /// </summary>
-        private string path;    // TODO delete
-        //BackgroundWorker worker;
+        //private string path;    // TODO delete
 
         public MainWindow()
         {
             InitializeComponent();
-
-            //worker = new BackgroundWorker();
-            //worker.DoWork += Worker_DoWork;
         }
-
-        //private void Worker_DoWork(object sender, DoWorkEventArgs e)
-        //{
-        //    AddToTheListFoundFilesImages();
-        //}
 
         private void btnOpenFolder_Click(object sender, RoutedEventArgs e)
         {
-            // TODO диалог открытия папки
             using(FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
             {
                 folderBrowserDialog.RootFolder = Environment.SpecialFolder.LocalizedResources;
@@ -58,13 +50,12 @@ namespace Task_ImageGallery
 
                 if (folderBrowserDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-
-                    // TODO считаю кол-во картинок в папке для прогресБара
-
-                    this.path = folderBrowserDialog.SelectedPath;
+                    this.imageSlider.Source = null;
+                    this.progressBar.Visibility = Visibility.Visible;
 
                     AddToTheListFoundFilesImages(folderBrowserDialog.SelectedPath);     // TODO (string path)
 
+                    this.progressBar.Visibility = Visibility.Hidden;
 
                     if (this.listBox.Items.Count > 0)
                     {
@@ -74,25 +65,29 @@ namespace Task_ImageGallery
             }
         }
 
+        /// <summary>
+        /// Установка в слайдер первой загруженной картинки.
+        /// </summary>
         private void SettingFirstImageInSlider()
         {
             imageSlider.Source = ((this.listBox.Items[0] as Wpf.Button).Content as Image).Source;
         }
 
 
+        /// <summary>
+        /// Добавление картинок в listBox из выбранной папки.
+        /// </summary>
+        /// <param name="selectedPath">Путь выбранной папки</param>
         private void AddToTheListFoundFilesImages(string selectedPath)
         {
             this.listBox.Items.Clear();
             this.progressBar.Value = 0;
 
             UpdateProgressBarDelegate updProgress = new UpdateProgressBarDelegate(progressBar.SetValue);
-            //double value = 0;
 
-            
+            DirectoryInfo directoryInfo = new DirectoryInfo(selectedPath);
 
-            DirectoryInfo directoryInfo = new DirectoryInfo(this.path);
-
-            this.progressBar.Maximum = directoryInfo.GetFiles().Count();    // pb
+            this.progressBar.Maximum = directoryInfo.GetFiles().Count();
 
 
             foreach (FileInfo fileInfo in directoryInfo.GetFiles())
@@ -101,45 +96,19 @@ namespace Task_ImageGallery
                 {
                     this.AddToListBoxImage(fileInfo);
 
-                    //this.progressBar.Value++;
-                    //System.Threading.Thread.Sleep(1000);
-                    //value++;
-                    //Dispatcher.Invoke(updProgress, new object[] { Wpf.ProgressBar.ValueProperty, ++this.progressBar.Value });
                     Dispatcher.Invoke(updProgress,
-                      System.Windows.Threading.DispatcherPriority.Background, new object[] { Wpf.ProgressBar.ValueProperty, ++this.progressBar.Value });
+                      System.Windows.Threading.DispatcherPriority.Background,
+                      new object[] { Wpf.ProgressBar.ValueProperty, ++this.progressBar.Value });
 
                 }
             }
         }
 
-
-        //private void AddToTheListFoundFilesImages(string selectedPath)
-        //{
-        //    this.listBox.Items.Clear();
-
-        //    DirectoryInfo directoryInfo = new DirectoryInfo(selectedPath);
-
-        //    this.progressBar.Maximum = directoryInfo.GetFiles().Count();    // pb
-
-
-        //    UpdateProgressBarDelegate updatePbDelegate = new UpdateProgressBarDelegate(progressBar.SetValue);
-
-
-
-        //    foreach (FileInfo fileInfo in directoryInfo.GetFiles())
-        //    {
-        //        if (IsImageExtensions(fileInfo.Extension) == true)
-        //        {
-        //            this.AddToListBoxImage(fileInfo);
-
-        //            this.progressBar.Value++;
-        //            System.Threading.Thread.Sleep(1000);
-
-
-        //        }
-        //    }
-        //}
-
+        /// <summary>
+        /// Проверка расширения файла (картинка или нет).
+        /// </summary>
+        /// <param name="extension">Расширение файла</param>
+        /// <returns>true если картинка</returns>
         private bool IsImageExtensions(string extension)
         {
             if (extension == ".bmp"
@@ -153,16 +122,22 @@ namespace Task_ImageGallery
             return false;
         }
 
+        /// <summary>
+        /// Добавление в listBox одной картинки.
+        /// </summary>
+        /// <param name="fileInfo"></param>
         private void AddToListBoxImage(FileInfo fileInfo)
         {
-            Wpf.Button button = new Wpf.Button
-            {
-                Content = "test btn"
-            };
+            //Wpf.Button button = new Wpf.Button
+            //{
+            //    Content = "test btn"
+            //};
+            Wpf.Button button = new Wpf.Button();
             button.Click += Button_Click;
             button.Height = 100;
-            button.Width = this.listBox.ActualWidth;    // TODO перерисовывать!?
-                                                        //button.Margin = new Thickness(10);
+            button.Width = this.listBox.ActualWidth;    // TODO
+            button.Margin = new Thickness(0, 2, 0, 2);
+
 
 
             Image image = new Image();
@@ -174,21 +149,27 @@ namespace Task_ImageGallery
             this.listBox.Items.Add(button);
         }
 
+        /// <summary>
+        /// Обработка нажатия на картинку (кнопку в которой картинка).
+        /// </summary>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // TODO установка выбранной картинки в слайдер
+            // Установка выбранной картинки в слайдер.
             imageSlider.Source = ((sender as Wpf.Button).Content as Image).Source;
         }
 
-        private void progressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void progressBar_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            //progressBar.Value++;
+            if (progressBar.IsVisible)
+            {
+                slider.Visibility = Visibility.Hidden;
+                expander.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                slider.Visibility = Visibility.Visible;
+                expander.Visibility = Visibility.Visible;
+            }
         }
-
-
-
-
-
-
     }
 }

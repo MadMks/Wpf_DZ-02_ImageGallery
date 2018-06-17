@@ -6,60 +6,43 @@
         xmlns:local="clr-namespace:Task_ImageGallery"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <!--<Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="2*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="6*"/>
-        </Grid.RowDefinitions>
-        <Button Grid.Column="0" Grid.Row="0">1</Button>
-        <TextBlock Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2">Progress Bar</TextBlock>
-        <ListBox Grid.Column="0" Grid.Row="1">
-            <ListBoxItem>1</ListBoxItem>
-            <ListBoxItem>2</ListBoxItem>
-            <ListBoxItem>3</ListBoxItem>
-        </ListBox>
-    </Grid>-->
+    <Window.Background>
+        #FF323232
+    </Window.Background>
     <DockPanel>
-        <Grid DockPanel.Dock="Top">
+        
+        <Grid DockPanel.Dock="Top" Margin="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Name="btnOpenFolder" Click="btnOpenFolder_Click">Открыть папку</Button>
-            <!--<TextBlock>Progres Bar</TextBlock>-->
-            <ProgressBar Name="progressBar" Grid.Column="1" Grid.ColumnSpan="2" Minimum="0" Value="0" ValueChanged="progressBar_ValueChanged"></ProgressBar>
+            <Button Grid.Column="0" Name="btnOpenFolder" Click="btnOpenFolder_Click" Margin="5">Открыть папку</Button>
+            <ProgressBar Name="progressBar" Grid.Column="1" Grid.ColumnSpan="2" Minimum="0" Value="0" IsVisibleChanged="progressBar_IsVisibleChanged">
+                <ProgressBar.Visibility>Visible</ProgressBar.Visibility>
+                <ProgressBar.Margin>5</ProgressBar.Margin>
+            </ProgressBar>
+            <Slider Grid.Column="1" Visibility="Hidden" Name="slider" Margin="5"></Slider>
+            <Expander Grid.Column="2" Visibility="Hidden" Name="expander" Header="Информация" Margin="5">
+                <TextBlock>Test</TextBlock>
+            </Expander>
         </Grid>
-        <!--<StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-            <Button Name="btnOpenFolder" Click="btnOpenFolder_Click">Открыть папку</Button>
-            <ProgressBar HorizontalAlignment="Stretch"></ProgressBar>
-        </StackPanel>-->
-        <!--<StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
-            <ListBox>
-                <ListBoxItem>
-                    <Button>
-                        Tag Image
-                    </Button>
-                </ListBoxItem>
-                <ListBoxItem>2</ListBoxItem>
-                <ListBoxItem>3</ListBoxItem>
-            </ListBox>
-            <TextBlock>img</TextBlock>
-        </StackPanel>-->
-        <Grid>
+
+        <Grid Margin="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
-            <ListBox Grid.Column="0" Name="listBox">
-            </ListBox>
-            <!--<TextBlock Grid.Column="1">img</TextBlock>-->
-            <Image Name="imageSlider" Grid.Column="1" Stretch="Uniform"></Image>
+            <Border BorderBrush="Gray" BorderThickness="2" CornerRadius="4" Padding="5" Margin="5">
+                <ListBox Grid.Column="0" Name="listBox" Background="Transparent">
+                    <ListBox.BorderBrush>Transparent</ListBox.BorderBrush>
+                    <ScrollViewer.HorizontalScrollBarVisibility>Hidden</ScrollViewer.HorizontalScrollBarVisibility>
+                </ListBox>
+            </Border>
+            <Border BorderBrush="Gray" BorderThickness="2" CornerRadius="4" Padding="5" Margin="5" Grid.Column="1">
+                <Image Name="imageSlider" Stretch="Uniform"></Image>
+            </Border>
         </Grid>
+        
     </DockPanel>
 </Window>
