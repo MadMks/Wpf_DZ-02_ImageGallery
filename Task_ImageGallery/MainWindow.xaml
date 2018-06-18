@@ -60,7 +60,7 @@
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <Border BorderBrush="Gray" BorderThickness="2" CornerRadius="4" Padding="5" Margin="5">
-                <ListBox Grid.Column="0" Name="listBox" Background="Transparent">
+                <ListBox Grid.Column="0" Name="listBox" Background="Transparent" SelectionChanged="listBox_SelectionChanged">
                     <ListBox.BorderBrush>Transparent</ListBox.BorderBrush>
                     <ScrollViewer.HorizontalScrollBarVisibility>Hidden</ScrollViewer.HorizontalScrollBarVisibility>
                 </ListBox>
