@@ -51,17 +51,20 @@ namespace Task_ImageGallery
 
                     AddToTheListFoundFilesImages(folderBrowserDialog.SelectedPath);
 
-                    this.progressBar.Visibility = Visibility.Hidden;
-
                     if (this.listBox.Items.Count > 0)
                     {
+                        this.progressBar.Visibility = Visibility.Hidden;
+
                         SettingFirstImageInSlider();
 
                         if (this.expander.IsExpanded == true)
                         {
                             this.ComputeFileDataForExpander();
                         }
-
+                    }
+                    else
+                    {
+                        this.Title = "Галерея картинок";
                     }
                 }
             }
@@ -226,8 +229,7 @@ namespace Task_ImageGallery
             {
                 imageSlider.Source = (this.listBox.SelectedItem as Image).Source;
 
-                // TODO FIX HACK
-                //this.listBox.Items.
+                this.Title = System.IO.Path.GetFileName(this.imageSlider.Source.ToString());
 
                 if (this.expander.IsExpanded == true)
                 {
