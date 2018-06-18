@@ -30,10 +30,6 @@ namespace Task_ImageGallery
     /// </summary>
     public partial class MainWindow : Window
     {
-        /// <summary>
-        /// Путь поиска файлов.
-        /// </summary>
-        //private string path;    // TODO delete
 
         public MainWindow()
         {
@@ -53,7 +49,7 @@ namespace Task_ImageGallery
                     this.imageSlider.Source = null;
                     this.progressBar.Visibility = Visibility.Visible;
 
-                    AddToTheListFoundFilesImages(folderBrowserDialog.SelectedPath);     // TODO (string path)
+                    AddToTheListFoundFilesImages(folderBrowserDialog.SelectedPath);
 
                     this.progressBar.Visibility = Visibility.Hidden;
 
@@ -65,6 +61,7 @@ namespace Task_ImageGallery
                         {
                             this.ComputeFileDataForExpander();
                         }
+
                     }
                 }
             }
@@ -133,17 +130,11 @@ namespace Task_ImageGallery
         /// <param name="fileInfo"></param>
         private void AddToListBoxImage(FileInfo fileInfo)
         {
-            //Wpf.Button button = new Wpf.Button
-            //{
-            //    Content = "test btn"
-            //};
             Wpf.Button button = new Wpf.Button();
             button.Click += Button_Click;
             button.Height = 100;
-            button.Width = this.listBox.ActualWidth;    // TODO
+            button.Width = this.listBox.ActualWidth;    // TODO поправить listBox (vertical scroll)
             button.Margin = new Thickness(0, 2, 0, 2);
-
-
 
             Image image = new Image();
             image.Stretch = Stretch.UniformToFill;
@@ -161,6 +152,9 @@ namespace Task_ImageGallery
         {
             // Установка выбранной картинки в слайдер.
             imageSlider.Source = ((sender as Wpf.Button).Content as Image).Source;
+
+            // TODO FIX HACK
+            //this.listBox.Items.
 
             if (this.expander.IsExpanded == true)
             {
@@ -185,12 +179,12 @@ namespace Task_ImageGallery
         {
             if (progressBar.IsVisible)
             {
-                slider.Visibility = Visibility.Hidden;
+                blockControl.Visibility = Visibility.Hidden;
                 expander.Visibility = Visibility.Hidden;
             }
             else
             {
-                slider.Visibility = Visibility.Visible;
+                blockControl.Visibility = Visibility.Visible;
                 expander.Visibility = Visibility.Visible;
             }
         }
@@ -198,6 +192,16 @@ namespace Task_ImageGallery
         private void expander_Expanded(object sender, RoutedEventArgs e)
         {
             this.ComputeFileDataForExpander();
+        }
+
+        private void btnPrev_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnNext_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
