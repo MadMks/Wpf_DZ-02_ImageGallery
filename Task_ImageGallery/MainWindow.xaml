@@ -23,8 +23,24 @@
                 <ProgressBar.Margin>5</ProgressBar.Margin>
             </ProgressBar>
             <Slider Grid.Column="1" Visibility="Hidden" Name="slider" Margin="5"></Slider>
-            <Expander Grid.Column="2" Visibility="Hidden" Name="expander" Header="Информация" Margin="5">
-                <TextBlock>Test</TextBlock>
+            <Expander Grid.Column="2" Visibility="Hidden" Name="expander" Header="Информация" Margin="5" Expanded="expander_Expanded">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Column="0" Grid.Row="0">Название</Label>
+                    <TextBox Grid.Column="1" Grid.Row="0" IsReadOnly="True" Name="fileNameTextBox" Margin="2">Test</TextBox>
+                    <Label Grid.Column="0" Grid.Row="1">Расширение</Label>
+                    <TextBox Grid.Column="1" Grid.Row="1" IsReadOnly="True" Name="fileExtensionTextbox" Margin="2">Test</TextBox>
+                    <Label Grid.Column="0" Grid.Row="2">Размер (px)</Label>
+                    <TextBox Grid.Column="1" Grid.Row="2" IsReadOnly="True" Name="fileSizeTextBox" Margin="2">Test</TextBox>
+                </Grid>
             </Expander>
         </Grid>
 

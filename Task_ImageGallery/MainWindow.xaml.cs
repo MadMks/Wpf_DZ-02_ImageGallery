@@ -60,6 +60,11 @@ namespace Task_ImageGallery
                     if (this.listBox.Items.Count > 0)
                     {
                         SettingFirstImageInSlider();
+
+                        if (this.expander.IsExpanded == true)
+                        {
+                            this.ComputeFileDataForExpander();
+                        }
                     }
                 }
             }
@@ -156,6 +161,24 @@ namespace Task_ImageGallery
         {
             // Установка выбранной картинки в слайдер.
             imageSlider.Source = ((sender as Wpf.Button).Content as Image).Source;
+
+            if (this.expander.IsExpanded == true)
+            {
+                this.ComputeFileDataForExpander();
+            }
+        }
+
+        private void ComputeFileDataForExpander()
+        {
+            this.fileNameTextBox.Text = System.IO.Path.GetFileName(this.imageSlider.Source.ToString());
+
+            string fileExtension = System.IO.Path.GetExtension(this.imageSlider.Source.ToString());
+            this.fileExtensionTextbox.Text = (fileExtension.Remove(0, 1)).ToUpper();
+
+            this.fileSizeTextBox.Text =
+                (this.imageSlider.Source as BitmapSource).PixelWidth.ToString()
+                + " x "
+                + (this.imageSlider.Source as BitmapSource).PixelHeight.ToString();
         }
 
         private void progressBar_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -170,6 +193,11 @@ namespace Task_ImageGallery
                 slider.Visibility = Visibility.Visible;
                 expander.Visibility = Visibility.Visible;
             }
+        }
+
+        private void expander_Expanded(object sender, RoutedEventArgs e)
+        {
+            this.ComputeFileDataForExpander();
         }
     }
 }
