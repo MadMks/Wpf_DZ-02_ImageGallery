@@ -75,7 +75,6 @@ namespace Task_ImageGallery
         /// </summary>
         private void SettingFirstImageInSlider()
         {
-            //imageSlider.Source = ((this.listBox.Items[0] as Wpf.Button).Content as Image).Source;
             imageSlider.Source = (this.listBox.Items[0] as Image).Source;
             listBox.SelectedIndex = 0;
         }
@@ -136,38 +135,13 @@ namespace Task_ImageGallery
         /// <param name="fileInfo"></param>
         private void AddToListBoxImage(FileInfo fileInfo)
         {
-            //Wpf.Button button = new Wpf.Button();
-            //button.Click += Button_Click;
-            //button.Height = 100;
-            //button.Width = this.listBox.ActualWidth;    // TODO поправить listBox (vertical scroll)
-            //button.Margin = new Thickness(0, 2, 0, 2);
-
             Image image = new Image();
             image.Stretch = Stretch.UniformToFill;
 
             image.Source = new BitmapImage(new Uri(fileInfo.FullName, UriKind.Absolute));
-            //button.Content = image;
             image.Height = 100;
             image.Margin = new Thickness(0, 2, 0, 2);
             this.listBox.Items.Add(image);
-        }
-
-        /// <summary>
-        /// Обработка нажатия на картинку (кнопку в которой картинка).
-        /// </summary>
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            // Установка выбранной картинки в слайдер.
-            //imageSlider.Source = ((sender as Wpf.Button).Content as Image).Source;
-            imageSlider.Source = (sender as Image).Source;
-
-            // TODO FIX HACK
-            //this.listBox.Items.
-
-            if (this.expander.IsExpanded == true)
-            {
-                this.ComputeFileDataForExpander();
-            }
         }
 
         private void ComputeFileDataForExpander()
@@ -221,9 +195,6 @@ namespace Task_ImageGallery
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Установка выбранной картинки в слайдер.
-            //imageSlider.Source = ((sender as Wpf.Button).Content as Image).Source;
-            //imageSlider.Source = (sender as Image).Source;
-            //imageSlider.Source = ((sender as ListBoxItem).Content as Image).Source;
 
             if (listBox.SelectedIndex != -1)
             {
@@ -237,8 +208,11 @@ namespace Task_ImageGallery
                 }
 
                 listBox.ScrollIntoView(this.listBox.SelectedItem as Image);
+
+                this.slider.Value = this.scrollViewer.ActualHeight;
             }
             
         }
+
     }
 }
